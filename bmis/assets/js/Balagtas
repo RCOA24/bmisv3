@@ -1,0 +1,136 @@
+{
+  "id": 1108696803,
+  "type": "Feature",
+  "properties": {
+    "edtf:cessation": "uuuu",
+    "edtf:inception": "uuuu",
+    "geom:area": 0.000273,
+    "geom:area_square_m": 3266280.684759,
+    "geom:bbox": "120.900856,14.82874,120.920547,14.852973",
+    "geom:latitude": 14.840957,
+    "geom:longitude": 120.90999,
+    "iso:country": "PH",
+    "label:eng_x_preferred_longname": [
+      "Balagtas Municipality"
+    ],
+    "label:eng_x_preferred_placetype": [
+      "municipality"
+    ],
+    "lbl:latitude": 14.841197,
+    "lbl:longitude": 120.909841,
+    "lbl:max_zoom": 10,
+    "lbl:min_zoom": 8,
+    "meso:admin_1": "BULACAN",
+    "meso:admin_1r": "CENTRAL LUZON REGION",
+    "meso:diss_me": "BALAGTAS (BIGAA)BULACAN",
+    "meso:gadm_admn2": "Guiguinto",
+    "meso:gadm_hasc_": "PH.BU.GI",
+    "meso:gaul_adm2_": "Bocaue",
+    "meso:mps_x": 120.909841,
+    "meso:mps_y": 14.841197,
+    "meso:name_local": "Balagtas (bigaa)",
+    "meso:source": "AOTM",
+    "mps:latitude": 14.841197,
+    "mps:longitude": 120.909841,
+    "mz:hierarchy_label": 1,
+    "mz:is_current": 1,
+    "mz:min_zoom": 6,
+    "name:eng_x_preferred": [
+      "Balagtas"
+    ],
+    "name:eng_x_variant": [
+      "Balagtas (bigaa)"
+    ],
+    "name:fra_x_preferred": [
+      "Balagtas"
+    ],
+    "name:tgl_x_preferred": [
+      "Balagtas"
+    ],
+    "src:geom": "meso",
+    "src:lbl_centroid": "mapshaper",
+    "statoids:country": "PH",
+    "statoids:date": "2010-05-01",
+    "statoids:hasc": "PH.BU.GI",
+    "statoids:name": "Guiguinto",
+    "statoids:population": 90507,
+    "statoids:statoid": "PH.BU",
+    "statoids:timezone": "+8",
+    "statoids:type": "municipality",
+    "wof:belongsto": [
+      102191569,
+      85632509,
+      85676135
+    ],
+    "wof:breaches": [],
+    "wof:concordances": {
+      "hasc:id": "PH.BU.GI"
+    },
+    "wof:concordances_official": "hasc:id",
+    "wof:country": "PH",
+    "wof:created": 1474495255,
+    "wof:geomhash": "352ceaf4df195ea0e37b88302e15e00f",
+    "wof:hierarchy": [
+      {
+        "continent_id": 102191569,
+        "country_id": 85632509,
+        "county_id": 1108696803,
+        "region_id": 85676135
+      }
+    ],
+    "wof:id": 1108696803,
+    "wof:lastmodified": 1695886252,
+    "wof:name": "Balagtas",
+    "wof:parent_id": 85676135,
+    "wof:placetype": "county",
+    "wof:repo": "whosonfirst-data-admin-ph",
+    "wof:superseded_by": [],
+    "wof:supersedes": [],
+    "wof:tags": []
+  },
+  "bbox": [
+    120.900856,
+    14.82874,
+    120.920547,
+    14.852973
+  ],
+  "geometry": {
+    "coordinates": [
+      [
+        [
+          120.919696,
+          14.848163
+        ],
+        [
+          120.920547,
+          14.84689
+        ],
+        [
+          120.911081,
+          14.830046
+        ],
+        [
+          120.911034,
+          14.830032
+        ],
+        [
+          120.904655,
+          14.82874
+        ],
+        [
+          120.900856,
+          14.83862
+        ],
+        [
+          120.909014,
+          14.852973
+        ],
+        [
+          120.919696,
+          14.848163
+        ]
+      ]
+    ],
+    "type": "Polygon"
+  }
+}
