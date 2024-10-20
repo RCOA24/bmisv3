@@ -1,3 +1,4 @@
+     <!-- Changes October 20, 2024 -->
 <div class="white-box">
     <div class="row">
         <div class="col-sm-6">
@@ -8,14 +9,18 @@
                 <li>
                     <div class="card-tools">
                         <a href="#add" data-toggle="modal" class="fcbtn btn btn-outline btn-primary btn-1d btn-xs btn-rounded">
-                            <i class="fa fa-plus"></i>
-                            Services
+                            <i class="fa fa-plus"></i> Services
+                        </a>
+                        <!-- Add the Send SMS button -->
+                        <a href="#sendSmsModal" data-toggle="modal" class="fcbtn btn btn-outline btn-success btn-1d btn-xs btn-rounded">
+                            <i class="fa fa-envelope"></i> Send SMS
                         </a>
                     </div>
                 </li>
             </ul>
         </div>
     </div>
+ <!-- Changes October 20, 2024 -->
 
     <div class="table-responsive m-t-30">
         <table class="table table-hover table-striped" id="precinctTable">
