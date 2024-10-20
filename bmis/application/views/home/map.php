@@ -6,68 +6,176 @@
     <title>Choropleth Map - Municipality of Balagtas</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        #map { width: 800px; height: 500px; }
-        .info { padding: 6px 8px; background: white; background: rgba(255, 255, 255, 0.8); box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); border-radius: 5px; }
-        .info h4 { margin: 0 0 5px; color: #777; }
-        .legend { text-align: left; line-height: 18px; color: #555; }
-        .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+        /* Make map responsive */
+        #map {
+            width: 100%; /* Full width */
+            height: 500px; /* Default height */
+        }
+        
+        /* Info box styles */
+        .info {
+            padding: 6px 8px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+        
+        /* Legend styling */
+        .legend {
+            text-align: left;
+            line-height: 30px;
+            color: #555;
+            display: flex;
+            align-items: center;
+        }
+        
+        .legend i {
+            width: 18px;
+            height: 20px;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+        
+        /* Trigger image styling */
+        .trigger-image {
+            width: 100px; /* Size of the image */
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        /* Modal background styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000; /* Ensure it's on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+        }
+        
+        /* Modal content styling */
+        .modal-content {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            width: 80%;
+            max-width: 900px;
+            height: 600px;
+            position: relative;
+            box-shadow: 0px 0px 50px rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Close button */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #000;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            #map {
+                height: 400px; /* Smaller height for mobile */
+            }
+            .modal-content {
+                width: 95%;
+                height: 90%; /* Smaller height */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #map {
+                height: 300px; /* Further reduced height for small screens */
+            }
+            .modal-content {
+                width: 100%;
+                height: 85%; /* Fit smaller screens */
+            }
+            .trigger-image {
+                width: 80px; /* Reduce size of the trigger image */
+            }
+        }
     </style>
 </head>
 <body>
-<h1 class="text-center" style="color: white;">Map of Balagtas - Borol 1st  </h1>
-    <center> <div id="map"></div> </center>
+    <h1 class="text-center" style="color: black;">Map of Balagtas - Borol 1st</h1>
+    <center><div id="map"></div></center>
+
+    <!-- Lightbox Modal -->
+    <div id="tideModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <iframe src="https://www.tideschart.com/Philippines/Central-Luzon/Province-of-Bulacan/Balagtas/Weekly/" 
+                    width="100%" height="100%" style="border:none;"></iframe>
+        </div>
+    </div>
 
     <!-- Include Leaflet JS -->
-    <<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // Inline GeoJSON data for Balagtas
+        // Inline GeoJSON data for Borol 1st, Balagtas
         var geojsonData = {
-            "type": "Feature",
-            "properties": {
-                "id": 1108696803,
-                "name": "Balagtas",
-                "population": 10780,
-                "area": 3266280.684759,
-                "bbox": [120.900856, 14.82874, 120.920547, 14.852973]
-            },
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [120.919696, 14.848163],
-                        [120.920547, 14.84689],
-                        [120.911081, 14.830046],
-                        [120.911034, 14.830032],
-                        [120.904655, 14.82874],
-                        [120.900856, 14.83862],
-                        [120.909014, 14.852973],
-                        [120.919696, 14.848163]
-                        
-                    ]
-                ]
-            }
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [
+                            [
+                                [120.9169667915285, 14.83630136972025],
+                                [120.9167549182538, 14.83906035161114],
+                                [120.9145960337036, 14.83824338458578],
+                                [120.9135477683005, 14.83751747721188],
+                                [120.9065096801734, 14.83226980699048],
+                                [120.9048983134902, 14.83302624006385],
+                                [120.9051042152951, 14.83208307540972],
+                                [120.9048938511448, 14.82637665474254],
+                                [120.9069858363222, 14.82440375844586],
+                                [120.9169667915285, 14.83630136972025]
+                            ]
+                        ]
+                    },
+                    "properties": {
+                        "name": "Borol 1st",
+                        "population": 10190,
+                        "area": 0.87 
+                    }
+                }
+            ]
         };
 
         // Create the map and set the initial view
-        var map = L.map('map').setView([14.841197, 120.909841], 14);
+        var map = L.map('map').setView([14.8326889, 120.91123693], 15);
 
         // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            attribution: '&copy; OpenStreetMap contributors',
             maxZoom: 19
         }).addTo(map);
 
-        // Define a function to color the map based on population
+        // Function to color map based on population
         function getColor(d) {
-            return d > 90000 ? '#800026' :
-                   d > 50000  ? '#BD0026' :
-                   d > 20000  ? '#E31A1C' :
-                   d > 10000  ? '#FC4E2A' :
-                                '#FFEDA0';
+            return d > 9000 ? '#800026' :
+                   d > 5000 ? '#BD0026' :
+                   d > 2000 ? '#E31A1C' :
+                   d > 1000 ? '#FC4E2A' :
+                              '#FFEDA0';
         }
 
-        // Define style for the GeoJSON feature
+        // Style GeoJSON features
         function style(feature) {
             return {
                 fillColor: getColor(feature.properties.population),
@@ -126,18 +234,23 @@
         };
         info.update = function (props) {
             this._div.innerHTML = '<h4>Borol 1st, Balagtas, Bulacan</h4>' + (props ?
-                '<b>' + props.name + '</b><br />Population: ' + props.population + '<br />Area: ' + props.area + ' sqm' :
-                'Hover over an area');
+                '<b>' + props.name + '</b><br />Population: ' + props.population + '<br />Area: ' + props.area + ' km²' :
+                'Mouse over the map to see details.');
         };
         info.addTo(map);
 
-        // Add a legend control to explain the color scheme
+        // Add a legend control to explain the color scheme and include the trigger image
         var legend = L.control({ position: 'bottomright' });
         legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend'),
-                grades = [10000, 20000, 50000, 90000],
+                grades = [1000, 2000, 5000, 9000],
                 labels = [],
                 from, to;
+
+            // Add the trigger image
+            var img = '<img src="/bmisv3/bmis/assets/img/TidesChart.jpg" alt="Open Tide Chart" class="trigger-image" id="openModal">';
+
+            // Build the legend labels
             for (var i = 0; i < grades.length; i++) {
                 from = grades[i];
                 to = grades[i + 1];
@@ -145,10 +258,49 @@
                     '<i style="background:' + getColor(from + 1) + '"></i> ' +
                     from + (to ? '&ndash;' + to : '+'));
             }
-            div.innerHTML = labels.join('<br>');
+
+            // Combine the trigger image and legend labels
+            div.innerHTML = img + labels.join('<br>');
             return div;
         };
         legend.addTo(map);
+
+        // Modal functionality
+        var modal = document.getElementById("tideModal");
+        var closeBtn = document.getElementsByClassName("close")[0];
+
+        // Open modal
+        function openModal() {
+            modal.style.display = "flex";
+        }
+
+        // Close modal
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Add event listener to open modal
+        map.on('load', function() {
+            var openModalBtn = document.getElementById("openModal");
+            if (openModalBtn) {
+                openModalBtn.onclick = openModal;
+            }
+        });
+
+        // Use a timeout to ensure the element exists
+        setTimeout(function() {
+            var openModalBtn = document.getElementById("openModal");
+            if (openModalBtn) {
+                openModalBtn.onclick = openModal;
+            }
+        }, 500);
     </script>
 </body>
 </html>
