@@ -122,10 +122,9 @@ class Services extends CI_Controller
     private function _send_sms($phone, $message)
     {
         // Twilio credentials
-        $sid = getenv('TWILIO_SID');
-        $token = getenv('TWILIO_TOKEN');
-        
-      //  $from = 'test';
+        $sid = 'ACec210be61162c61f13e50ecaf4980419'; // Twilio SID
+        $token = 'f21a6b6a64c4a2516f5fd42d69e6a5f0'; // Twilio Token
+        $from = '+14158010932'; // Twilio Phone Number
 
         // Initialize Twilio client
         $client = new Client($sid, $token);
