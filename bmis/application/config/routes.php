@@ -121,3 +121,6 @@ $route['client/resident/(:num)'] = 'home/resident/$1';
 
 $route['cancel/(:num)'] = 'request/cancel/$1';
 $route['received/(:num)'] = 'request/received/$1';
+
+
+$route['send_sms'] = 'services/send_sms';
