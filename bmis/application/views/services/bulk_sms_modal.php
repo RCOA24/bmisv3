@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="bulkSmsForm" action="<?= site_url('services/send_sms.php') ?>" method="POST" enctype="multipart/form-data">
+                <form id="bulkSmsForm" action="<?= site_url('services/send_sms') ?>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="smsType" value="bulk">
                     <div class="form-group">
                         <label for="file">Upload Excel/CSV File</label>

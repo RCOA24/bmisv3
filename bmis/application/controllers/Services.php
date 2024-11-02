@@ -55,7 +55,10 @@ class Services extends CI_Controller
         }
 
         redirect('services', 'refresh');
+        
     }
+
+    
 
     public function update()
     {
@@ -97,90 +100,141 @@ class Services extends CI_Controller
         redirect('services', 'refresh');
     }
     public function send_sms()
-    {
-        // Uncomment if authentication is required
-        // if (!$this->session->userdata('logged_in') || !has_permission('send_sms')) {
-        //     redirect('services', 'refresh');
-        // }
-    
-         // Check if Twilio\Client class is loaded
+{
+    // Check if Twilio SDK is loaded
     if (!class_exists('Twilio\Rest\Client')) {
-        echo "Twilio SDK not loaded!";
-        exit;
+        log_message('error', 'Twilio SDK not loaded');
+        $this->session->set_flashdata('errors', 'Twilio SDK not loaded.');
+        redirect('services', 'refresh');
+        return;
     }
-        $smsType = $this->input->post('smsType');
-    
-        // Set form validation rules based on SMS type
-        if ($smsType == 'single') {
-            $this->form_validation->set_rules('phone', 'Phone Number', 'required|regex_match[/^\+?[1-9]\d{1,14}$/]'); //the proper format is +639 000 000 000
 
-            $this->form_validation->set_rules('singleMessage', 'Message', 'required|trim|max_length[160]');
-        } elseif ($smsType == 'bulk') {
-            $this->form_validation->set_rules('file', 'File', 'required');
-            $this->form_validation->set_rules('bulkMessage', 'Message', 'required|trim|max_length[160]');
-        }
-    
+    $smsType = $this->input->post('smsType');
+    $filter = $this->input->post('filter');  
+    $sid = 'ACec210be61162c61f13e50ecaf4980419';
+    $token = '1a8428078d0b22c63e577bf9dc7b9ece'; 
+    $from = '+14158010932';
+    $client = new Client($sid, $token);
+
+    // Sending BULK SMS WORKING
+    if ($smsType === 'bulk') {
+        $this->form_validation->set_rules('bulkMessage', 'Message', 'required|trim|max_length[160]');
+        
+
+        // Check if form validation fails
         if ($this->form_validation->run() === FALSE) {
             $this->session->set_flashdata('errors', validation_errors());
             redirect('services', 'refresh');
             return;
         }
-    
-        // Load Twilio library and credentials
-        $sid = 'ACec210be61162c61f13e50ecaf4980419';
-        $token = '9f6a976102cceca37f313a5cee894218';
-       
-        $from = '+14158010932';
-        $client = new Client($sid, $token);
 
-    
-        // Sending SMS based on the type
+        // Check if file was uploaded
+        if (empty($_FILES['file']['name'])) {
+            $this->session->set_flashdata('errors', 'The File field is required.');
+            redirect('services', 'refresh');
+            return;
+        }
+
+        $filePath = $_FILES['file']['tmp_name'];
+        $bulkMessage = $this->input->post('bulkMessage');
+
         try {
-            if ($smsType == 'single') {
-                $phone = $this->input->post('phone');
-                $message = $this->input->post('singleMessage');
-    
-                $client->messages->create($phone, [
-                    'from' => $from,
-                    'body' => $message
-                ]);
-                $this->session->set_flashdata('message', 'Single SMS sent successfully!');
-                
-    
-            } elseif ($smsType == 'bulk') {
-                // Processing file and sending bulk SMS
-                $filePath = $_FILES['file']['tmp_name'];
-                $bulkMessage = $this->input->post('bulkMessage');
-    
-                $spreadsheet = IOFactory::load($filePath);
-                $sheet = $spreadsheet->getActiveSheet();
-    
-                foreach ($sheet->getRowIterator() as $row) {
-                    $phone = $row->getCellIterator()->current()->getValue();
-    
+            // Load the spreadsheet
+            $spreadsheet = IOFactory::load($filePath);
+            $sheet = $spreadsheet->getActiveSheet();
+
+            // Initialize columns
+            $phoneColumn = $genderColumn = $ageColumn = null;
+
+            // Get the header row
+            $headerRow = $sheet->getRowIterator()->current();
+            foreach ($headerRow->getCellIterator() as $cell) {
+                $headerValue = strtolower(trim($cell->getValue()));
+                if ($headerValue === 'phone') {
+                    $phoneColumn = $cell->getColumn();
+                } elseif ($headerValue === 'gender') {
+                    $genderColumn = $cell->getColumn();
+                } elseif ($headerValue === 'age') {
+                    $ageColumn = $cell->getColumn();
+                }
+            }
+
+            // Ensure required columns are found
+            if (!$phoneColumn || !$genderColumn || !$ageColumn) {
+                throw new Exception('Missing one or more required columns: Phone, Gender, Age.');
+            }
+
+            // Iterate through the rows in the sheet
+            foreach ($sheet->getRowIterator(2) as $row) {
+                $phone = $sheet->getCell($phoneColumn . $row->getRowIndex())->getValue();
+                $gender = strtolower(trim($sheet->getCell($genderColumn . $row->getRowIndex())->getValue()));
+                $age = (int)$sheet->getCell($ageColumn . $row->getRowIndex())->getValue();
+
+                // Filter based on gender and age
+                if (
+                    ($filter === 'men' && $gender === 'male') ||
+                    ($filter === 'women' && $gender === 'female') ||
+                    ($filter === 'seniors' && $age >= 60) ||
+                    ($filter === 'all')
+                ) {
+                    // Check if phone number is valid
                     if ($phone) {
-                        $client->messages->create($phone, [
-                            'from' => $from,
-                            'body' => $bulkMessage
-                        ]);
+                        try {
+                            $client->messages->create($phone, [
+                                'from' => $from,
+                                'body' => $bulkMessage
+                            ]);
+                            log_message('info', "Bulk SMS sent to $phone");
+                        } catch (Exception $e) {
+                            log_message('error', 'Error sending SMS to ' . $phone . ': ' . $e->getMessage());
+                            $this->session->set_flashdata('errors', 'Error sending SMS to ' . $phone . ': ' . $e->getMessage());
+                        }
                     }
                 }
-                $this->session->set_flashdata('message', 'Bulk SMS sent successfully!');
             }
-    
+
+            $this->session->set_flashdata('message', 'Bulk SMS sent successfully!');
         } catch (Exception $e) {
+            log_message('error', 'Error processing file: ' . $e->getMessage());
+            $this->session->set_flashdata('errors', 'Error processing file: ' . $e->getMessage());
+        }
+    } else {
+        // Handle single SMS sending
+        $this->form_validation->set_rules('phone', 'Phone Number', 'required|regex_match[/^\+?[1-9]\d{1,14}$/]'); 
+        $this->form_validation->set_rules('singleMessage', 'Message', 'required|trim|max_length[160]');
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->session->set_flashdata('errors', validation_errors());
+            redirect('services', 'refresh');
+            return;
+        }
+
+        // Sending Single SMS
+        $phone = $this->input->post('phone');
+        $singleMessage = $this->input->post('singleMessage');
+
+        try {
+            $client->messages->create($phone, [
+                'from' => $from,
+                'body' => $singleMessage
+            ]);
+            $this->session->set_flashdata('message', 'Single SMS sent successfully!');
+        } catch (Exception $e) {
+            log_message('error', 'Error sending SMS: ' . $e->getMessage());
             $this->session->set_flashdata('errors', 'Error sending SMS: ' . $e->getMessage());
         }
-    
-        redirect('services', 'refresh');
     }
+    
+    redirect('services', 'refresh');
+}
+
     
 
     private function _send_sms($phones, $message)
 {
     // Twilio credentials
     $sid = 'ACec210be61162c61f13e50ecaf4980419'; // Twilio SID
-    $token = 'f21a6b6a64c4a2516f5fd42d69e6a5f0'; // Twilio Token
+    $token = '1a8428078d0b22c63e577bf9dc7b9ece'; // Twilio Token nov 2
     $from = '+14158010932'; // Twilio Phone Number
 
     // Initialize Twilio client
