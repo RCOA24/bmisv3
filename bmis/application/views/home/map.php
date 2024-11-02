@@ -70,7 +70,7 @@
             max-width: 900px;
             height: 600px;
             position: relative;
-            box-shadow: 0px 0px 50px rgba(255, 255, 255, 0.9);
+           /* Glow  box-shadow: 0px 0px 50px rgba(255, 255, 255, 0.9);  */
         }
         
         /* Close button */

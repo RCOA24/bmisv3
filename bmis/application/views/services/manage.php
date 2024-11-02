@@ -1,26 +1,77 @@
-     <!-- Changes October 20, 2024 -->
 <div class="white-box">
     <div class="row">
         <div class="col-sm-6">
             <h4 class="box-title"><?= $title ?></h4>
         </div>
-        <div class="col-sm-6">
-            <ul class="list-inline pull-right">
-                <li>
-                    <div class="card-tools">
-                        <a href="#add" data-toggle="modal" class="fcbtn btn btn-outline btn-primary btn-1d btn-xs btn-rounded">
-                            <i class="fa fa-plus"></i> Services
-                        </a>
-                        <!-- Add the Send SMS button -->
-                        <a href="#sendSmsModal" data-toggle="modal" class="fcbtn btn btn-outline btn-success btn-1d btn-xs btn-rounded">
-                            <i class="fa fa-envelope"></i> Send SMS
-                        </a>
-                    </div>
-                </li>
-            </ul>
+        <!-- Align buttons to the right side -->
+        <div class="col-sm-6" style="text-align: right;">
+            <div class="card-tools" style="display: inline-flex; align-items: center;">
+                <!-- Services button -->
+                <a href="#add" data-toggle="modal" class="fcbtn btn btn-outline btn-primary btn-1d btn-xs btn-rounded" style="margin-right: 5px;">
+                    <i class="fa fa-plus"></i> Services
+                </a>
+
+                <!-- Dropdown for Send SMS -->
+                <div class="dropdown" onmouseover="this.classList.add('open');" onmouseout="this.classList.remove('open');" style="display: inline-block;">
+                    <a href="#" class="fcbtn btn btn-outline btn-success btn-1d btn-xs btn-rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-envelope"></i> Send SMS
+                    </a>
+                    <ul class="dropdown-menu" style="min-width: 150px;">
+                        <li>
+                            <!-- Link to Single SMS Modal -->
+                            <a href="#singleSmsModal" data-toggle="modal">Single SMS</a>
+                        </li>
+                        <li>
+                            <!-- Link to Bulk SMS Modal -->
+                            <a href="#bulkSmsModal" data-toggle="modal">Bulk SMS (Excel/CSV)</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
+
+    <style>
+             /* Style for dropdown container */
+            .dropdown-menu {
+                background-color: #f8f9fa; /* Light background color */
+                border: 1px solid #ddd; /* Light border */
+                border-radius: 5px; /* Rounded corners */
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+                padding: 8px 0; /* Space around items */
+            } 
+
+            /* Style for dropdown items */
+            .dropdown-menu li a {
+                color: #007bff; /* Primary color for text */
+                padding: 10px 20px; /* Padding for clickable area */
+                font-size: 14px; /* Adjust font size */
+                font-weight: 500; /* Semi-bold text */
+                display: block; /* Make link fill full width */
+                text-decoration: none; /* Remove underline */
+                transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+            }
+
+            /* Hover effect for dropdown items */
+            .dropdown-menu li a:hover {
+                background-color: #007bff; /* Darker blue on hover */
+                color: #fff; /* White text on hover */
+                border-radius: 4px; /* Rounded corners on hover */
+            }
+
+
+
+            /* Hover effect for dropdown button */
+            .fcbtn.dropdown-toggle:hover {
+                background-color: #218838; /* Darker green on hover */
+                color: #fff; /* Keep white text */
+            }
+
+    </style>
+
  <!-- Changes October 20, 2024 -->
+
+
 
     <div class="table-responsive m-t-30">
         <table class="table table-hover table-striped" id="precinctTable">
@@ -64,4 +115,7 @@
         </table>
     </div>
 </div>
+
+ <!-- Modals for services, Single sms and Bulk SMS -->
 <?php $this->load->view('services/modal') ?>
+<?php $this->load->view('services/bulk_sms_modal') ?>

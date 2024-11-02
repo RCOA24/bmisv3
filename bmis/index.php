@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -228,6 +229,7 @@ switch (ENVIRONMENT)
 
 	// Path to the system directory
 	define('BASEPATH', $system_path);
+	require_once __DIR__ . '/../vendor/autoload.php';
 
 	// Path to the front controller (this file) directory
 	define('FCPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);

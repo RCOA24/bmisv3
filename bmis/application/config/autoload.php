@@ -1,5 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+    
+$config['composer_autoload'] = realpath(APPPATH . '../vendor/autoload.php');
+
 /*
 | -------------------------------------------------------------------
 | AUTO-LOADER
@@ -154,3 +157,4 @@ $autoload['model'] = array(
     'servicesModel',
     'requestModel'
 );
+

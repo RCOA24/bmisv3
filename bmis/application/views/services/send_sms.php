@@ -14,9 +14,10 @@ class Services extends CI_Controller
 
     public function send_sms()
     {
-        $sid = 'ACec210be61162c61f13e50ecaf4980419'; // Twilio SID
-        $token = 'f21a6b6a64c4a2516f5fd42d69e6a5f0'; // Twilio Token
-        $from = '+14158010932'; // Twilio Phone Number
+         // Load Twilio library and credentials
+         $sid = 'ACec210be61162c61f13e50ecaf4980419';
+         $token = '9f6a976102cceca37f313a5cee894218';
+         $from = '+14158010932';
         $client = new Client($sid, $token);
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
