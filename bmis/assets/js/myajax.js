@@ -559,3 +559,22 @@ $('#notif').click(function(){
 setInterval(function(){
     load_unseen_notification();
 }, 5000);
+
+// bulk sms
+$('#bulkSmsForm').submit(function (e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+        url: $(this).attr('action'),
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            // Handle success
+        },
+        error: function (xhr) {
+            // Handle error
+        }
+    });
+});
