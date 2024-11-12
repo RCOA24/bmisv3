@@ -89,32 +89,40 @@ $certs = $query2->row();
                             </div>
                             <div class="row" id="cert_cont">
                                 <div class="col-md-4 col-sm-4 col-xs-4 text-center" style="background-color: <?= $certs->color_bg ?> !important" id="cert_sidebar">
-                                    <h5 class="font-bold m-b-0 m-t-20">SANGGUNIANG <?= ucwords($info->brgy_name) ?> </h5>
-                                    <h5 class="font-bold"><?= $info->starts . '-' . $info->end ?></h5>
-                                    <?php if (!empty($captain->avatar)) : ?>
-                                        <img src="<?= site_url() . 'assets/uploads/avatar/' . $captain->avatar ?>" alt="Captain Profile" class="b-all m-t-10" width="100" height="100">
-                                    <?php endif ?>
+                                <!--  <h5 class="font-bold m-b-0 m-t-20">SANGGUNIANG <?= ucwords($info->brgy_name) ?> </h5> -->
+                                <!--  <h5 class="font-bold"><?= $info->starts . '-' . $info->end ?></h5>  -->
+
+                                    <img src="<?= site_url() . 'assets/img/abms_logo-blackk.png' ?>" alt="Barangay Borol Primero" class="b-all m-t-10" width="100" height="100">
+
                                     <h5 class="m-t-10 font-bold m-b-0"><?= strtoupper($captain->name) ?></h5>
                                     <p class="text-dark">Punong Barangay</p>
                                     <h5 class="m-t-30 m-b-20 font-bold">SANGGUNIANG BARANGAY KAGAWAD</h5>
-                                    <?php if (!empty($kagawad)) : ?>
-                                        <?php foreach ($kagawad as $row) : ?>
-                                            <h5 class="m-b-15 font-bold m-t-0"><?= strtoupper($row['name']) ?></h5>
-                                        <?php endforeach ?>
-                                    <?php endif ?>
-                                    <h6 class="m-t-15"></h6>
-                                    <?php if (!empty($selected_off)) : ?>
-                                        <?php foreach ($selected_off as $row) : ?>
-                                            <h5 class="m-t-20 font-bold m-b-0"><?= strtoupper($row['name']) ?></h5>
-                                            <p class="text-dark"><?= $row['position'] ?></p>
-                                        <?php endforeach ?>
-                                    <?php endif ?>
+                                   
+            <?php if (!empty($kagawad)) : ?>
+    <?php foreach ($kagawad as $row) : ?>
+        <p class="font-bold" style="font-size: 13px; margin-bottom: 5px;"><?= strtoupper($row['name']) ?></p>
+        <p class="text-dark" style="font-size: 11px; margin-bottom: 10px;"><?= $row['position'] ?></p> <!-- Display chairmanship here with adjusted font size -->
+    <?php endforeach ?>
+<?php endif ?>
+           <!--  
+            <hr style="border-top: 1px solid #333; margin: 10px 0;">
+            
+            <?php if (!empty($selected_off)) : ?>
+                <?php foreach ($selected_off as $row) : ?>
+                    <p class="font-bold m-b-0"><?= strtoupper($row['name']) ?></p>
+                    <p class="text-dark"><?= $row['position'] ?></p>
+                <?php endforeach ?>
+            <?php endif ?>
+             -->
                                 </div>
                                 <div class="col-md-8 col-sm-8 col-xs-8" id="cert_body">
                                     <img src="<?= site_url() . 'assets/uploads/' . $certs->watermark ?>" class="img-fluid" width="400" id="brgy_logo">
                                     <div id="cert_content">
                                         <div class="text-center">
-                                            <h5 class="m-t-20 m-b-0 font-bold">OFFICE OF THE PUNONG BARANGAY</h5>
+                                        <h8 class="m-t-20 m-b-0 font-bold">Republic of the Philippines <br>Province of Bulacan <br>Balagtas </h5>
+                                        <h8 class="m-t-20 m-b-0 font-bold">Municipality of Balagtas</h5> <br>
+                                        <h8 class="m-t-20 m-b-0 font-bold">Barangay Borol 1st </h5> <br>
+                                        <h8 class="m-t-20 m-b-0 font-bold">OFFICE OF THE PUNONG BARANGAY</h5>
                                         </div>
                                         <div class="text-center">
                                             <h2 class="m-t-10 font-bold"><?= strtoupper($title) ?></h2>
@@ -167,7 +175,7 @@ $certs = $query2->row();
                                             </div>
                                             <div class="row">
 
-                                                <div class="col-md-6 col-sm-6 col-xs-6 text-left" style="margin-top:-20px">
+                                                <div class="col-md-6 col-sm-6 col-xs-6 text-left" style="margin-top:-30px">
 
                                                 </div>
                                             </div>
@@ -182,9 +190,7 @@ $certs = $query2->row();
 
                                     <img src="<?= site_url() . '/assets/uploads/' . $certs->flag ?>" class="img-fluid" width="160" id="flag">
                                 </div>
-                                <div class="col-md-6 col-sm-6 col-xs-6 text-right">
-                                    <img src="<?= site_url() . '/assets/uploads/' . $certs->motto ?>" class="m-t-30 img-fluid" width="200">
-                                </div>
+                              
                             </div>
                         </div>
 

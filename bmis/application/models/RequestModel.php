@@ -78,4 +78,7 @@ class RequestModel extends CI_Model
         $this->db->delete('request');
         return $this->db->affected_rows();
     }
+
+
 }
+

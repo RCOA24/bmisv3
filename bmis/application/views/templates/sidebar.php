@@ -28,7 +28,7 @@
         <nav class="sidebar-nav">
             <ul id="side-menu">
                 <li>
-                    <a href="<?= site_url('dashboard') ?>" aria-expanded="false" class="<?= $current_page == 'dashboard' || $current_page == 'resident_info' || $current_page == 'covid-deaths' || $current_page == 'population' || $current_page == 'covidstatus' ? 'active' : null ?>">
+                    <a href="<?= site_url('dashboard') ?>" aria-expanded="false" class="<?= $current_page == 'dashboard' ? 'active' : null ?>">
                         <i class="icon-screen-desktop fa-fw"></i> <span class="hide-menu"> Dashboard</span>
                     </a>
                 </li>
@@ -36,46 +36,39 @@
                     <a href="<?= site_url('officials') ?>" aria-expanded="false"><i class="icon-user-following fa-fw"></i> <span class="hide-menu"> Brgy Officials & Staff</span></a>
                 </li>
                 <li>
-                    <a href="<?= site_url('resident') ?>" aria-expanded="false" class="<?= $current_page == 'generate_profile' || $current_page == 'create_resident' || $current_page == 'edit_resident' || $current_page == 'generate_id' ? 'active' : null ?>">
+                    <a href="<?= site_url('resident') ?>" aria-expanded="false" class="<?= $current_page == 'resident_info' ? 'active' : null ?>">
                         <i class="icon-people fa-fw"></i> <span class="hide-menu"> Resident Information</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?= site_url('resident_certification') ?>" aria-expanded="false" class="<?= $current_page == 'generate_brgy_cert' || $current_page == 'generate_resi_cert' || $current_page == 'generate_indi_cert' ? 'active' : null ?>">
-                        <i class="icon-badge fa-fw"></i> <span class="hide-menu"> Barangay Certificates</span>
+                    <a href="<?= site_url('services') ?>" aria-expanded="false" class="<?= $current_page == 'services' ? 'active' : null ?>">
+                        <i class="fa fa-gears fa-fw"></i> <span class="hide-menu"> Document Processing <span class="caret pull-right"></span></span>
                     </a>
+                    <ul class="collapse">
+
+                    <li>
+                    <a href="<?= site_url('services') ?>" aria-expanded="false" class="<?= $current_page == 'services' ? 'active' : null ?>"><i class="fa fa-gears fa-fw"></i> <span class="hide-menu"> Services</span></a>
                 </li>
-                <li>
-                    <a href="<?= site_url('certificates') ?>" aria-expanded="false" class="<?= $current_page == 'create_certificates' || $current_page == 'edit_certificate' || $current_page == "generate_cert" || $current_page == "view_cert" ? 'active' : null ?>"><i class="icon-docs fa-fw"></i> <span class="hide-menu"> Create Certificates</span></a>
-                </li>
-                <li>
-                    <a href="<?= site_url('business') ?>" aria-expanded="false" class="<?= $current_page == 'generate_business_permit' ? 'active' : null ?>"><i class="icon-doc fa-fw"></i> <span class="hide-menu"> Brgy Business Clearance</span></a>
-                </li>
-                <li>
-                    <a href="<?= site_url('blotter') ?>" aria-expanded="false" class="<?= $current_page == 'generate_blotter_report' || $current_page == 'summon' || $current_page == 'edit_blotter' || $current_page == 'create_blotter'
-                                                                                            || $current_page == 'generate_settlement_report' || $current_page == 'generate_dismissed_report' || $current_page == 'generate_endorsed_report' || $current_page == 'generate_summon' ? 'active' : null ?>"><i class="icon-layers fa-fw"></i> <span class="hide-menu"> Blotter Records</span></a>
-                </li>
-                <li>
-                    <a href="<?= site_url('payments') ?>" aria-expanded="false"><i class="fa fa-product-hunt fa-fw"></i> <span class="hide-menu"> Revenue</span></a>
-                </li>
-            
-                <li>
-                    <a href="<?= site_url('precinct_info') ?>" aria-expanded="false" class="<?= $current_page == 'precinct_info' ? 'active' : null ?>"><i class="icon-list fa-fw"></i> <span class="hide-menu"> Precinct Information</span></a>
-                </li>
-                <li>
-                    <a href="<?= site_url('houses') ?>" aria-expanded="false" class="<?= $current_page == 'house_info' ? 'active' : null ?>"><i class="icon-home fa-fw"></i> <span class="hide-menu">Households</span></a>
-                </li>
-                <li>
-                    <a href="<?= site_url('request') ?>" aria-expanded="false" class="<?= $current_page == 'request' ? 'active' : null ?>"><i class="icon-flag fa-fw"></i> <span class="hide-menu"> Requested Documents</span></a>
-                </li>
-                <li>
-                    <a href="<?= site_url('services') ?>" aria-expanded="false" class="<?= $current_page == 'services' ? 'active' : null ?>"><i class="fa fa-gears (alias) fa-fw"></i> <span class="hide-menu"> Services</span></a>
+                        <li>
+                            <a href="<?= site_url('request') ?>" class="<?= $current_page == 'request' ? 'active' : null ?>"><i class="icon-flag fa-fw"></i> Requested Documents</a>
+                        </li>
+                        <li>
+                            <a href="<?= site_url('resident_certification') ?>" class="<?= $current_page == 'resident_certification' ? 'active' : null ?>"><i class="icon-badge fa-fw"></i> Barangay Certificates</a>
+                        </li>
+                        <li>
+                            <a href="<?= site_url('certificates') ?>" class="<?= $current_page == 'create_certificates' ? 'active' : null ?>"><i class="icon-docs fa-fw"></i> Create Certificates</a>
+                        </li>
+                        <li>
+                            <a href="<?= site_url('business') ?>" class="<?= $current_page == 'generate_business_permit' ? 'active' : null ?>"><i class="icon-doc fa-fw"></i> Business Clearance</a>
+                        </li>
+                      
+                    </ul>
                 </li>
                 <li>
                     <a href="<?= site_url('announcement') ?>" aria-expanded="false" class="<?= $current_page == 'announcement' ? 'active' : null ?>"><i class="icon-pin fa-fw"></i> <span class="hide-menu"> Announcement</span></a>
                 </li>
                 <li>
-                    <a href="#about" data-toggle="modal" aria-expanded="false"><i class="icon-bubble fa-fw"></i> <span class="hide-menu"> About</span></a>
+                    <a href="<?= site_url('houses') ?>" aria-expanded="false" class="<?= $current_page == 'house_info' ? 'active' : null ?>"><i class="icon-home fa-fw"></i> <span class="hide-menu"> Households</span></a>
                 </li>
                 <li>
                     <a href="<?= site_url('backup') ?>" aria-expanded="false"><i class="fa fas fa-download fa-fw"></i> <span class="hide-menu"> Backup</span></a>
@@ -88,12 +81,12 @@
 
                 <?php if ($this->session->role == 'administrator') : ?>
                     <li>
-                        <a class="waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-wrench fa-fw"></i> <span class="hide-menu"> Settings<span class="caret pull-right m-t-10"></span></span></a>
-                        <ul aria-expanded="false" class="collapse m-b-40 p-b-40">
+                        <a class="waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-wrench fa-fw"></i> <span class="hide-menu"> Settings <span class="caret pull-right"></span></span>
+                        </a>
+                        <ul aria-expanded="false" class="collapse">
                             <li><a href="#barangay" data-toggle="modal">Barangay Info</a></li>
                             <li><a href="#cert" data-toggle="modal">Certificate</a></li>
                             <li><a href="<?= site_url('purok') ?>">Street</a></li>
-                            <li><a href="<?= site_url('precinct') ?>">Precinct</a></li>
                             <li><a href="<?= site_url('position') ?>">Positions</a></li>
                             <li><a href="<?= site_url('chairmanship') ?>">Chairmanship</a></li>
                             <li><a href="<?= site_url('user') ?>">Users</a></li>

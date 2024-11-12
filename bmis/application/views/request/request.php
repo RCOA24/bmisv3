@@ -1,7 +1,21 @@
+<?php
+// Calculate the pending count
+$pendingCount = 0;
+if (isset($trans)) { // Ensure $trans is set
+    foreach ($trans as $row) {
+        if ($row['status'] === 'Pending') {
+            $pendingCount++;
+        }
+    }
+}
+?>
+
+
 <div class="white-box">
     <div class="row">
         <div class="col-sm-6">
             <h4 class="box-title"><?= $title ?></h4>
+            <p class="text-muted">Total Pending Requests: <span class="font-weight-bold text-danger"><?= $pendingCount ?></span></p>
         </div>
     </div>
 
@@ -32,7 +46,7 @@
                         <td><?= $row['payment_method'] ?></td>
                         <td><?= $row['ref_no'] ?></td>
                         <td>
-                            <select class=" form-control" onchange="requestStatus(this)" data-id="<?= $row['req_id'] ?>">
+                            <select class="form-control" onchange="requestStatus(this)" data-id="<?= $row['req_id'] ?>">
                                 <option <?= $row['status'] == 'Pending' ? 'selected' : null ?>>Pending</option>
                                 <option <?= $row['status'] == 'Ready for Pickup' ? 'selected' : null ?>>Ready for Pickup</option>
                                 <option <?= $row['status'] == 'Received' ? 'selected' : null ?>>Received</option>
@@ -43,7 +57,6 @@
                             <a href="<?= site_url('request/delete/') . $row['req_id'] ?>" onclick="return confirm('Are you sure you want to delete this request?');" data-toggle="tooltip" data-original-title="Remove">
                                 <i class="fa fa-close text-danger"></i>
                             </a>
-                           
 
                             <?php if (strtolower($row['title']) === 'barangay clearance') : ?>
                                 <a href="<?= site_url('generate_brgy_cert/') . $row['res_id'] ?>" onclick="return confirm('Redirect to print page?');" data-toggle="tooltip" data-original-title="Print">
@@ -66,6 +79,7 @@
         </table>
     </div>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -93,3 +107,4 @@
         </div>
     </div>
 </div>
+

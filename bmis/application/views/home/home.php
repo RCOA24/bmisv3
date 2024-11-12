@@ -1,32 +1,31 @@
+<!-- Footer -->
+<footer class="text-light py-2 fixed-bottom" style="background-color: #102407;">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center text-center text-md-left">
+        <!-- Barangay and City Logos -->
+        <div class="mb-2 mb-md-0">
+            <img src="<?= site_url('assets/uploads/') . $info->brgy_logo ?>" class="img-fluid" width="40" alt="Barangay Logo">
+            <img src="<?= site_url('assets/uploads/') . $info->city_logo ?>" class="img-fluid" width="40" alt="City Logo">
+        </div>
 
-<div class="container-fluid text-light">
-    <div class="row align-items-center mt-5">
-        <div class="col-md-3 mt-5 text-center">
-            <div class="row">
-                <div class="col">
-                    <img src="<?= site_url('assets/uploads/') . $info->brgy_logo ?>" class="img-fluid " width="220">
-                </div>
-                <div class="col" id="img-town">
-                    <img src="<?= site_url('assets/uploads/') .  $info->city_logo ?>" class="img-fluid">
-                </div>
-            </div>
+        <!-- Welcome Message and Contact Information -->
+        <div class="flex-grow-1 mb-2 mb-md-0">
+            <small>Welcome to Barangay <?= $info->brgy_name ?> | <?= $info->street . ', ' . $info->purok . ', ' . $info->town ?> | Open Hours: Mon-Fri, 8AM-5PM</small>
         </div>
-        <div class="col-md-6 mt-5">
-            <div class="text-center">
-                <h1 class="welcome_text">Welcome to</h1>
-                <h1 class="font-weight-bold welcome_text">Barangay <?= $info->brgy_name ?></h1>
-            </div>
-            <div class="text-center mt-5" style="border: 2px solid #fff; padding: 15px; border-radius: 25px; background: aliceblue;   opacity: .8; color: black;">
-                <h5 class="text-capitalize"><?= $info->street . ', ' . $info->purok . ', ' . $info->brgy_name . ', ' . $info->town . ', ' . $info->province ?></h5>
-                <h5>Open Hours of Barangay: Monday to Friday (8AM - 5PM)</h5>
-                <h5><a href="mailto:<?= $info->email ?>"><?= $info->email ?></a> / <a href="tel:<?= $info->number ?>"><?= $info->number ?></a></h5>
-            </div>
-            <div class="text-center">
-                <a href="<?= site_url('client/about-us') ?>" class="btn btn-outline-secondary" id="about-btn">About Us</a>
-            </div>
-        </div>
-        <div class="col-md-3 mt-5 text-center">
-            <img src="<?= site_url('assets/uploads/') . $info->city_logo ?>" class="img-fluid img-town" width="220">
+
+        <!-- Contact Links -->
+        <div class="text-white">
+            <small>
+                <a href="mailto:<?= $info->email ?>" class="text-white">Email</a> | 
+                <a href="tel:<?= $info->number ?>" class="text-white">Call Us</a> | 
+                <a href="<?= site_url('client/about-us') ?>" class="text-white">About Us</a>
+            </small>
         </div>
     </div>
-</div>
+</footer>
+
+<!-- Optional JavaScript -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-k2trqY6ArOr1pZz3KV8zUN2kAX9TtuoXsIT5T1KxJ9BRj4oMmWlv6zr5dKVF16t" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

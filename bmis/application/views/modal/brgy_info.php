@@ -85,14 +85,14 @@ $info = $query1->row();
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="control-label">Barangay Background</label>
                         <textarea class="form-control" required name="background"><?= empty($row->background) ? null : $row->background ?></textarea>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Mission/Vision</label>
                         <textarea class="form-control" required name="db_msg"><?= empty($row->dashboard_text) ? null : $row->dashboard_text ?></textarea>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label class="control-label">Barangay Map Url</label>
                         <input type="url" class="form-control" name="map" value="<?= empty($row->map) ? null : $row->map ?>" />

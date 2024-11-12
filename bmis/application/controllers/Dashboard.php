@@ -21,11 +21,27 @@ class Dashboard extends CI_Controller
 	 */
 	public function index()
 	{
+		// Check if user is logged in and is not a resident
 		if (!$this->session->userdata('logged_in') || $this->session->userdata('role') == 'resident') {
-			//redirect them to the dasboard page
 			redirect('client', 'refresh');
 		}
-
+	
+		// Load necessary models
+		$this->load->model('DashboardModel');
+		$this->load->model('RequestModel');
+	
+		// Fetch transactions data from RequestModel
+		$trans = $this->RequestModel->transactions();  // This should give you the transactions for the dashboard
+	
+		// Calculate pending request count
+		$pendingCount = 0;
+		foreach ($trans as $row) {
+			if ($row['status'] === 'Pending') {
+				$pendingCount++;
+			}
+		}
+	
+		// Fetch data from DashboardModel
 		$data['population'] = $this->dashboardModel->getTotalPopulation();
 		$data['voters'] = $this->dashboardModel->getVoters();
 		$data['nonvoters'] = $this->dashboardModel->getnonVoters();
@@ -36,13 +52,21 @@ class Dashboard extends CI_Controller
 		$data['permit'] = $this->dashboardModel->getPermit();
 		$data['male'] = $this->dashboardModel->getMale();
 		$data['female'] = $this->dashboardModel->getFemale();
-
 		$data['announcement'] = $this->dashboardModel->getlatestAnnouncement();
-
+	
+		// Additional settings
 		$data['info'] = $this->settingsModel->getbrgy_Info();
 		$data['title'] = 'Dashboard';
+		
+		// Pass the pending request count and transactions to the view
+		$data['pendingCount'] = $pendingCount;
+		$data['trans'] = $trans;
+	
+		// Load the view with all collected data
 		$this->base->load('default', 'dashboard', $data);
 	}
+	
+
 
 	public function getWeeklyRevenue()
 	{
@@ -441,4 +465,7 @@ class Dashboard extends CI_Controller
 		//output to json format
 		echo json_encode($output);
 	}
+
+
+	
 }

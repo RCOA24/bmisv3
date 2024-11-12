@@ -29,56 +29,79 @@ body {
 
 .navbar-header,
 .right-sidebar .rpanel-title {
-	background: #292E3D(202, 100%, 100%);
-	background: -moz-linear-gradient(left, #0F111A 100%, #00beda 100%);
-	background: -webkit-linear-gradient(left, #0F111A 100%, #00beda 100%);
-	background: linear-gradient(to right, #212529 100%, #00beda 100%)
+	background: #122907(202, 100%, 100%);
+	background: -moz-linear-gradient(left, #122907 100%);
+	background: -webkit-linear-gradient(left, #122907 100%);
+	background: linear-gradient(to right, #122907 100%, #122907 100%)
 }
 
 .bg-title .breadcrumb .active {
 	color: #0283cc
 }
-
+/* Sidebar Container */
 .sidebar,
 .sidebar-nav {
-	background: #0f111a
+    background: #0c1d05 !important; /* Dark Green background */
+    color: #fff; /* Text color */
+   
+    padding-top: 20px; /* Padding at the top */
+    box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.2); /* Light shadow on the right */
+   
 }
 
-.sidebar {
-	border-right: 1px solid #333744
+/* Sidebar Navigation */
+.sidebar-nav {
+    list-style: none; /* Remove default list styles */
+    padding: 0;
+    margin: 0;
 }
 
-#side-menu li a {
-	color: #8d9498
+/* Individual Navigation Links */
+.sidebar-nav li {
+    display: block;
+    margin: 10px 0; /* Space between items */
 }
 
-.sidebar-nav ul#side-menu li a.active {
-	color: #fff
+/* Sidebar Links */
+.sidebar-nav li a {
+    display: block;
+    padding: 12px 20px;
+    color: #fff; /* White text color */
+    font-size: 16px;
+    font-weight: 500; /* Slightly bolder text */
+    text-decoration: none; /* Remove underline */
+    border-radius: 4px;
+    transition: background-color 0.3s ease, padding-left 0.3s ease;
 }
 
-#side-menu ul>li>a:hover,
-.sidebar-nav ul#side-menu li a.active i {
-	color: #0283cc
+/* Hover effect on links */
+.sidebar-nav li a:hover {
+    background-color: #397d46; /* Slightly lighter green on hover */
+    padding-left: 25px; /* Slight padding to the left for better hover effect */
 }
 
-#side-menu ul>li>a.active {
-	color: #fff;
-	font-weight: 500
+/* Active link */
+.sidebar-nav li a.active {
+    background-color: #133319 !important; /* Darker green for active links */
 }
 
-.mini-sidebar .sidebar-nav #side-menu>li:hover>a {
-	background: #444859;
-	color: #fff;
-	border-color: #444859
+/* Icons inside the sidebar (if using font-awesome or similar) */
+.sidebar-nav li a i {
+    margin-right: 10px; /* Space between icon and text */
 }
 
-.mini-sidebar .sidebar-nav #side-menu>li:hover>a i {
-	color: #0283cc
+/* Sidebar Header or Title */
+.sidebar-header {
+    padding: 15px 20px;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: #174d28; /* Slightly different shade for the header */
+    color: #fff;
+    margin-bottom: 20px; /* Space below the header */
 }
 
-.mini-sidebar .sidebar-nav #side-menu>li>ul {
-	background: #3d4050
-}
+
 
 .fix-sidebar .top-left-part {
 	background: #0078bc

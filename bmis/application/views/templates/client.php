@@ -31,13 +31,23 @@ $current_page = $this->uri->segment(2);
     <link rel="stylesheet" href="<?= site_url() ?>assets/css/home.css">
     <title><?= $title ?> | <?= $info->sname ?></title>
     <style>
+    #wrapper {
+        height: 100vh;
+        background-image: url("assets/img/Borol1st.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    /* Change the background image for mobile view */
+    @media (max-width: 768px) {
         #wrapper {
-            height: 100%;
-        
-            background-image: url("assets/img/rbestrella.jpg");
+            background-image: url("assets/img/Borol1st_mobile.png"); /* Use a mobile-specific image */
             background-size: cover;
         }
-    </style>
+    }
+</style>
+
 </head>
 
 <body style="background-color:black">
@@ -46,7 +56,7 @@ $current_page = $this->uri->segment(2);
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <style>
                 .navbar.bg-primary {
-                background-color: #0F111A!important; /* Your custom color */
+                background-color:   #102407!important; /* Your custom color */
                 }   
              </style>
              

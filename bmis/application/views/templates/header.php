@@ -5,7 +5,7 @@
 <meta name="keywords" content="">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" type="image/png" sizes="16x16" href="<?= site_url() ?>assets/img/abms_logo-black.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="<?= site_url() ?>assets/img/abms_logo-blackk.png">
 <!-- ===== Bootstrap CSS ===== -->
 <link href="<?= site_url() ?>assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- ===== Plugin CSS ===== -->

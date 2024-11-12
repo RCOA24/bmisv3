@@ -783,30 +783,256 @@ a[href="#covidUpdate"] i.fa.fa-certificate.text-inverse.m-r-10 {
 .text-dark {
     color: #333b3f!important
 }
+/* Apply box-sizing to all elements */
+* {
+    box-sizing: border-box; /* Include padding and borders in the element's total width/height */
+}
 
+/* Primary Color - Modern Look with Gradient and Soft Shadow */
 .bg-primary {
-    background-color: #0283cc!important;
-    color: #fff
+    background: linear-gradient(145deg, #54a1ce, #064669); /* Gradient for depth */
+    color: #fff;
+    border-radius: 8px; /* Rounded corners for a smoother look */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    transition: all 0.3s ease-in-out; /* Smooth hover transition */
 }
 
+.bg-primary:hover {
+    background: linear-gradient(145deg, #064669, #54a1ce); /* Reverse gradient on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Success Color - Soft Green with Gradient */
 .bg-success {
-    background-color: #2ecc71!important;
-    color: #fff
+    background: linear-gradient(145deg, #a4b495, #475f4e); /* Green gradient */
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
 }
 
+.bg-success:hover {
+    background: linear-gradient(145deg, #475f4e, #a4b495);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Info Color - Modern Blue with Gradient */
 .bg-info {
-    background-color: #00bbd9!important;
-    color: #fff
+    background: linear-gradient(145deg, #84d0db, #02859c); /* Blue gradient */
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
 }
 
-.bg-warning {
-    background-color: #ffb136!important;
-    color: #fff
+.bg-info:hover {
+    background: linear-gradient(145deg, #02859c, #84d0db);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
+/* Warning Color - Bright Orange with Gradient */
+.bg-warning {
+    background: linear-gradient(145deg, #8e8ebd, #38386e); /* Purple gradient */
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.bg-warning:hover {
+    background: linear-gradient(145deg, #38386e, #8e8ebd);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* General Styles for Info Boxes */
+.info-color-box {
+    background: #fff;
+    margin-bottom: 20px; /* Space between each box */
+    padding: 15px; /* Increased padding inside the box */
+    border-radius: 16px; /* Rounded corners */
+    overflow: visible !important;
+   
+    transition: all 0.3s ease-in-out; /* Smooth hover transition */
+}
+
+
+.info-color-box .white-box {
+    border-radius: 8px; /* Rounded corners */
+}
+
+.info-color-box .media {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 8px; /* Rounded corners */
+    color: white; /* Text color */
+    transition: all 0.3s ease-in-out;
+}
+
+.info-color-box .media-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden; /* Ensure no overflow within the container */
+    min-height: 50px; /* Ensure there’s enough space */
+}
+
+.info-color-box .info-count {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+    color: white; /* Ensure the number is white */
+    
+    
+}
+
+.info-color-box .info-text {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 5px;
+    color: white; /* Ensure the text is white */
+}
+
+.info-color-box .info-ot {
+    font-size: 13px;
+    margin-top: 10px;
+    text-align: right;
+    color: white; /* Ensure the footer link is white */
+}
+
+.info-color-box .info-ot a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+}
+
+.info-color-box .info-ot a:hover {
+    text-decoration: underline;
+}
+
+/* Hover Effect on Each Box */
+.info-color-box:hover {
+    transform: translateY(-5px); /* Slight lift effect */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+}
+
+/* PWD Section (Blue Gradient) */
+.pwd {
+    background: linear-gradient(145deg, #ecc585, #a86807); /* Orange gradient */
+    border-radius: 8px; /* Rounded corners */
+}
+
+.pwd:hover {
+    background: linear-gradient(145deg, #a86807, #ecc585);
+}
+
+/* Business Permit Section (Blue Gradient) */
+.business.permit {
+    background: linear-gradient(145deg, #579bf3, #064177); /* Blue gradient */
+}
+
+.business.permit:hover {
+    background: linear-gradient(145deg, #064177, #579bf3);
+}
+
+/* Blotter Section (Red Gradient) */
+.blotter {
+    background: linear-gradient(145deg, #f08a8f, #a31f2c); /* Red gradient */
+}
+
+.blotter:hover {
+    background: linear-gradient(145deg, #a31f2c, #f08a8f);
+}
+
+/* Responsive Design */
+@media (max-width: 742px) {
+    .info-color-box {
+        margin-bottom: 15px; /* Smaller margin on smaller screens */
+        padding: 15px; /* Keep padding consistent for mobile */
+        font-size: 16px; /* Reduce the font size on smaller screens */
+    }
+    
+    .info-color-box .media {
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center; /* Center-align all content */
+        padding: 15px; /* Ensure proper padding */
+        
+
+    }
+    
+    .info-color-box .info-count {
+        font-size: 36px;              /* Adjust this to your desired font size */
+        font-weight: bold;            /* Bold font for number */
+        margin: 0;                    /* Remove any extra margin */
+    }
+
+    .info-color-box .info-text {
+        font-size: 16px; /* Adjust text size */
+        text-align: center;
+    }
+
+    .info-color-box .info-ot {
+        font-size: 14px; /* Slightly larger footer text for mobile */
+        text-align: center; /* Center align text in mobile */
+        margin-top: 5px;
+
+    }
+
+    .info-color-box .info-count i {
+        font-size: 25px; /* Icon size */
+        margin-top: 10px; /* Padding between the number and the icon */
+        margin-bottom: 0;             /* Remove bottom margin */
+    }
+
+    /* Ensure spacing around text */
+    .info-color-box .info-ot a {
+        font-weight: 600;
+        text-decoration: none;
+        color: white;
+    }
+
+    .info-color-box .info-ot a:hover {
+        text-decoration: underline;
+    }
+
+    
+    /* Ensures all elements are visible and correctly spaced */
+    .info-color-box .media-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; /* Center-align the text and icon */
+    }
+    
+    .info-count {
+        visibility: visible !important;
+        display: block !important;
+    }
+    
+
+    /* Fix the background color issue by explicitly setting text color */
+    .info-color-box .info-text,
+    .info-color-box .info-ot a {
+        color: white !important;
+    }
+    .info-color-box .info-text, .info-color-box .info-ot {
+        text-align: center; /* Center text for the labels as well */
+    }
+}
+
+
+
+/* This is where the rounded boxes hover css ended */
+
 
 .bg-danger {
-    background-color: #e74a25!important;
+    background: linear-gradient(145deg, #f08a8f, #a31f2c); /* Red gradient */
     color: #fff
+}
+
+
+.bg-danger:hover {
+    background: linear-gradient(145deg, #a31f2c, #f08a8f);
 }
 
 .bg-white {
@@ -5856,12 +6082,69 @@ ul.list-icons li i {
 }
 
 .white-box {
-    background: #fff;
+    background-color: #fff !important; /* Ensure the background is white */
     padding: 25px;
     margin-bottom: 30px;
     border: 1px solid #e5ebec;
-    border-radius: 4px
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
 }
+
+/* Printable area of certificates*/
+.printableArea {
+    max-width: 100%;
+    max-height: fit-content;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#cert_sidebar {
+    word-wrap: break-word;
+    padding: 20px;
+    color: #000;
+    overflow: hidden;
+    box-sizing: border-box;
+    max-width: 300px; /* Adjust the maximum width as needed */
+}
+
+#cert_sidebar h5,
+#cert_sidebar p {
+    font-size: 1em;
+   
+}
+
+@media (max-width: 768px) {
+    #cert_sidebar {
+        padding: 10px;
+    }
+
+    #cert_sidebar h5,
+    #cert_sidebar p {
+        font-size: 0.8em;
+    }
+
+    .printableArea {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    #cert_sidebar h5,
+    #cert_sidebar p {
+        font-size: 0.7em;
+    }
+}
+
+#cert_sidebar .kagawad-list {
+    font-size: 0.8em; /* Adjust the font size as needed */
+    line-height: 1.2; /* Adjust the line height as needed */
+}
+
+
+
+/* Printable area*/
+
+
 
 .white-box .box-title {
     margin: 10px 0 12px;
@@ -7201,7 +7484,7 @@ ul.list-icons li i {
 }
 
 .sidebar-nav ul#side-menu li a.active {
-    color: #2b2b2b;
+    color: #ffffff;
     background: 0 0
 }
 
@@ -14008,6 +14291,11 @@ table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
 
 .el-element-overlay .white-box {
     padding: 0
+}
+
+.white-box {
+    border-radius: 40px  !important;/* Adjust the radius as needed */
+    /* Other styles as needed */
 }
 
 .el-element-overlay .el-card-item {

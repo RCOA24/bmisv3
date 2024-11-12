@@ -3,16 +3,36 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class DashboardModel extends CI_Model
 {
-
-    public function __contruct()
+    public function __construct()
     {
         $this->load->database();
     }
 
+    // Population related methods
     public function getPopulation()
     {
         $this->db->where('resident_type', 'Alive');
         return $this->db->get('residents')->result_array();
+    }
+
+    // Request-related methods
+    public function getReq()
+    {
+        $this->db->select('*, request.status as status, request.id as req_id, residents.id as res_id');
+        $this->db->from('request');
+        $this->db->join('services', 'services.id=request.service_id');
+        $this->db->join('residents', 'residents.id=request.resident_id');
+        $this->db->order_by('request.id', 'DESC');
+        $this->db->limit(5);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function getReqCount()
+    {
+        $this->db->where('request_stat', 0); // Pending requests
+        $query = $this->db->get('request');
+        return $query->num_rows();
     }
     public function getMale()
     {
@@ -284,5 +304,5 @@ class DashboardModel extends CI_Model
         $this->db->like('remarks', 'Covid');
         $query = $this->db->get('residents');
         return $query->num_rows();
-    }
+    } 
 }

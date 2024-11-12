@@ -1,17 +1,24 @@
 <div class="white-box">
     <div class="row">
-        <div class="col-md-3 text-center">
-            <img src="assets/uploads/<?= $info->brgy_logo ?>" class="img-fluid" width="100">
+        <!-- Logo on the left side -->
+        <div class="col-md-3 text-left">
+            <img src="assets/img/muni.png" class="img-fluid" width="100">
         </div>
+
+        <!-- Text centered in the middle -->
         <div class="col-md-6 text-center">
             <h2 class="font-bold"><?= ucwords($info->brgy_name) ?></h2>
             <h4 class="font-bold"><i><?= ucwords($info->town) ?></i></h4>
         </div>
-        <div class="col-md-3 text-center">
-            <img src="assets/img/brgy-logo.png" class="img-fluid" width="100" style="visibility:hidden;">
+
+        <!-- Second logo on the left side -->
+        <div class="col-md-3 text-right">
+        <img src="assets/uploads/<?= $info->brgy_logo ?>" class="img-fluid" width="100">
+            
         </div>
     </div>
 </div>
+
 <div class="white-box">
     <div class="row">
         <div class="col-sm-6">

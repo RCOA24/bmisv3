@@ -11,7 +11,7 @@ $info = $query1->row();
         <div class="top-left-part">
             <a class="logo" href="<?= site_url('dashboard') ?>">
                 <b>
-                    <img src="<?= site_url() ?>assets/img/abms_logo.png" alt="home" width="30" />
+                    <img src="<?= site_url() ?>assets/img/abms_logo-blackk.png" alt="home" width="30" />
                 </b>
                 <span class="font-bold">
                     <?= empty($info->acronym) ? 'ABM SYSTEM' : $info->acronym ?>

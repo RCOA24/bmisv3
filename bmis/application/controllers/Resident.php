@@ -104,8 +104,6 @@ class Resident extends CI_Controller
                 $nestedData['action']       = '<a type="button" href="' . site_url('generate_brgy_cert/') . $res->id . '" data-toggle="tooltip" data-original-title="Generate Barangay Certificate"><i class="fa fa-file-text-o text-inverse m-r-10"></i> </a>';
                 $nestedData['action']       .= '<a type="button" href="' . site_url('generate_indi_cert/') . $res->id . '" data-toggle="tooltip" data-original-title="Generate Indigency Certificate"><i class="fa fa-file-text-o text-info m-r-10"></i> </a>';
                 $nestedData['action']       .= '<a type="button" href="' . site_url('generate_resi_cert/') . $res->id . '" data-toggle="tooltip" data-original-title="Generate Residency Certificate"><i class="fa fa-file-text-o text-success m-r-10"></i> </a>';
-
-                $data[] = $nestedData;
             }
         }
         $json_data = array(
@@ -675,6 +673,8 @@ class Resident extends CI_Controller
         $this->certificate_layout->load('certificate', 'resident/generate_resi_cert', $data);
     }
 
+
+    // Apply mapping for the import and conversion process 
     public function importCSV()
     {
         $config = array(
@@ -814,6 +814,7 @@ class Resident extends CI_Controller
 
         redirect($_SERVER['HTTP_REFERER'], 'refresh');
     }
+    
 
     public function qrCode($id)
     {
