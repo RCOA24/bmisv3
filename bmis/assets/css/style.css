@@ -90,10 +90,10 @@ html {
 
 body {
     background: #fff;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     overflow-x: hidden;
-    color: #8d9498;
+    color: #000000;
     font-weight: 400
 }
 
@@ -1978,10 +1978,11 @@ pre {
     background: #fff
 }
 
-.modal-content {
+.modal-content{
     border-radius: 0;
     box-shadow: 0 5px 15px rgba(0, 0, 0, .1)
 }
+
 
 .alert {
     border-radius: 0

@@ -1,3 +1,21 @@
+<?php 
+// Initialize an array to hold the count of residents per purok
+$residentsByPurok = [];
+
+// Loop through the $residents array to count residents per purok
+foreach ($residents as $resident) {
+    $purok = $resident['purok']; // Adjust if the key name differs
+    
+    // Initialize purok in the array if not already set
+    if (!isset($residentsByPurok[$purok])) {
+        $residentsByPurok[$purok] = 0;
+    }
+    $residentsByPurok[$purok]++;
+}
+?>
+
+
+
 <div class="bg-light mb-5">
     <div class="container mb-5">
         <div class="text-center pt-5 pb-3">
@@ -135,6 +153,29 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        
+        <div class="bg-light mb-5">
+    <div class="container mb-5">
+        <div class="text-center pt-5 pb-3">
+            <h1 class="welcome_text">Resident Profile</h1>
+        </div>
+        <!-- Resident Information Display as in the original code -->
+
+        <!-- Population Count per Purok Section -->
+        <div class="mt-5">
+            <h4 class="text-center">Population Count per Purok</h4>
+            <?php foreach ($residentsByPurok as $purok => $count): ?>
+                <div class="row mt-3">
+                    <div class="col-6 text-right">
+                        <h6 class="font-weight-bold"><?= htmlspecialchars($purok) ?>:</h6>
+                    </div>
+                    <div class="col-6 text-left">
+                        <h6><?= $count ?></h6>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
     <div class="w-100" style="height: 100px;"></div>

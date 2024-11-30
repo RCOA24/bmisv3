@@ -52,7 +52,7 @@ $current_page = $this->uri->segment(2);
 
 <body style="background-color:black">
     <div id="wrapper">
-        <header>
+        <header>    
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <style>
                 .navbar.bg-primary {
@@ -79,9 +79,9 @@ $current_page = $this->uri->segment(2);
                             <li class="nav-item <?= $current_page == 'services' ? 'active' : null ?>">
                                 <a class="nav-link font-weight-bold text-uppercase" href="<?= site_url('client/services') ?>">Services</a>
                             </li>
-                            <li class="nav-item <?= $current_page == 'map' ? 'active' : null ?>">
+                            <!-- <li class="nav-item <?= $current_page == 'map' ? 'active' : null ?>">
                                 <a class="nav-link font-weight-bold text-uppercase" href="<?= site_url('client/map') ?>">Map</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item <?= $current_page == 'about-us' ? 'active' : null ?>">
                                 <a class="nav-link font-weight-bold text-uppercase" href="<?= site_url('client/about-us') ?>">About</a>
                             </li>

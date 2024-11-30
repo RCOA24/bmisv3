@@ -101,7 +101,7 @@ $(function() {
         }
     });
     
-
+    // we removed the total population and changed the color of female into pink
     // Morris donut chart
     $.ajax({
         type: "POST",
@@ -111,19 +111,18 @@ $(function() {
             console.log(response);
             Morris.Donut({
                 element: 'morris-donut-chart',
-                data: [{
-                    label: "Total Residents",
-                    value: response.total,
-        
-                }, {
-                    label: "Total Male",
-                    value: response.male
-                }, {
-                    label: "Total Female",
-                    value: response.female
-                }],
+                data: [
+                    {
+                        label: "Total Male",
+                        value: response.male
+                    },
+                    {
+                        label: "Total Female",
+                        value: response.female
+                    }
+                ],
                 resize: true,
-                colors: ['#0e83cc', '#6861ce', '#FFB136']
+                colors: ['#0e83cc', '#cc0e83']
             });
         }
     });

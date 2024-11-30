@@ -1,3 +1,8 @@
+
+
+
+
+
 <div class="white-box">
     <div class="row">
         <div class="col-sm-6">
@@ -26,6 +31,10 @@
             </ul>
         </div>
     </div>
+
+    
+
+    <!-- Resident Table -->
     <div class="table-responsive">
         <table class="table table-hover table-striped" id="residenttable">
             <thead>
@@ -44,7 +53,6 @@
                     <th>Alived/Deceased</th>
                     <th>PWD</th>
                     <th>Action</th>
-                    
                 </tr>
             </thead>
         </table>
@@ -52,4 +60,3 @@
 </div>
 
 <?php $this->load->view('resident/modal') ?>
-

@@ -124,3 +124,8 @@ $route['received/(:num)'] = 'request/received/$1';
 
 
 $route['send_sms'] = 'services/send_sms';
+
+//This is where to fetch the data
+$route['population-data'] = 'resident/fetch_population_data';
+
+

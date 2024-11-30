@@ -1,7 +1,9 @@
 <div class="row">
     <div class="col-md-9">
+        
         <div class="white-box">
             <div class="row">
+                
                 <div class="col-sm-6">
                     <h4 class="box-title"><?= $title ?></h4>
                 </div>
@@ -46,9 +48,12 @@
                         <?php endif ?>
                     </tbody>
                 </table>
+                
             </div>
         </div>
+        
     </div>
+    
     <div class="col-md-3">
         <div class="row colorbox-group-widget">
             <div class="col-md-12 col-sm-12 info-color-box">
@@ -72,5 +77,6 @@
                 </div>
             </div>
         </div>
+        
     </div>
 </div>

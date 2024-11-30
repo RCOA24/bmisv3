@@ -28,10 +28,13 @@ class Resident extends CI_Controller
 
     public function index()
     {
+        
         if (!$this->session->userdata('logged_in') || $this->session->userdata('role') == 'resident') {
             //redirect them to the dasboard page
             redirect('login', 'refresh');
+
         }
+        
         $data['resident'] = $this->residentModel->getResident();
 
         $data['title'] = 'Barangay Residents';
@@ -562,18 +565,71 @@ class Resident extends CI_Controller
             'user_id' => $this->session->id,
         );
         $this->settingsModel->insert_activity($log);
-
+    
         $this->load->dbutil();
-
-        $query = $this->db->query("SELECT * FROM residents JOIN other_details ON residents.id=other_details.resident_id");
-
-        $csv = $this->dbutil->csv_from_result($query);
-
-        $this->load->helper('download');
-        force_download(date('F-d-h:i:s') . '-residents.csv', $csv);
-
+    
+        // Run the query and check for errors
+        $query = $this->db->query("
+            SELECT 
+                residents.national_id,
+                residents.citizenship,
+                residents.firstname,
+                residents.middlename,
+                residents.lastname,
+                residents.alias,
+                residents.birthplace,
+                residents.birthdate,
+                residents.age,
+                residents.civilstatus,
+                residents.gender,
+                residents.purok,
+                residents.voterstatus,
+                residents.phone,
+                residents.email,
+                residents.occupation,
+                residents.employer_name,
+                residents.pwd,              
+                residents.address,
+                other_details.sss AS sss_no,
+                other_details.tin AS tin_no,
+                other_details.precinct AS precinct,
+                other_details.gsis AS gsis_no,
+                other_details.pagibig AS pagibig_no,
+                other_details.philhealth AS philhealth_no
+            
+            FROM residents 
+            LEFT JOIN other_details ON residents.id = other_details.resident_id
+        ");
+    
+        // Check if the query executed successfully
+        if ($query === false) {
+            // Log the error message if the query failed
+            $db_error = $this->db->error();
+            log_message('error', 'Database error: ' . $db_error['message']);
+            
+            // Set a flash message to notify the user of the error
+            $this->session->set_flashdata('message', 'Error exporting CSV: ' . $db_error['message']);
+            redirect($_SERVER['HTTP_REFERER'], 'refresh');
+            return;
+        }
+    
+        // Check if there are results
+        if ($query->num_rows() > 0) {
+            $csv = $this->dbutil->csv_from_result($query);
+    
+            $this->load->helper('download');
+            force_download(date('F-d-h:i:s') . '-residents.csv', $csv);
+        } else {
+            // If no data is returned, set a flash message to inform the user
+            $this->session->set_flashdata('message', 'No data available to export.');
+            redirect($_SERVER['HTTP_REFERER'], 'refresh');
+        }
+    
         exit;
     }
+    
+    
+
 
     public function brgy_cert()
     {
@@ -674,146 +730,161 @@ class Resident extends CI_Controller
     }
 
 
-    // Apply mapping for the import and conversion process 
     public function importCSV()
-    {
-        $config = array(
-            'upload_path' => "./assets/uploads/CSV/",
-            'allowed_types' => "csv",
-            'encrypt_name' => TRUE,
-        );
+{
+    $config = array(
+        'upload_path' => "./assets/uploads/CSV/",
+        'allowed_types' => "csv",
+        'encrypt_name' => TRUE,
+    );
 
-        $this->load->library('upload', $config);
-        $this->form_validation->set_rules('import_file', 'CSV File', 'required');
+    $this->load->library('upload', $config);
+    $this->form_validation->set_rules('import_file', 'CSV File', 'required');
 
-        if (!$this->upload->do_upload('import_file')) {
+    if (!$this->upload->do_upload('import_file')) {
+        $this->session->set_flashdata('errors', $this->upload->display_errors());
+        return; // Exit if file upload failed
+    } else {
+        $file = $this->upload->data();
 
-            $this->session->set_flashdata('errors',  $this->upload->display_errors());
-        } else {
-            $file = $this->upload->data();
+        // Reading file
+        $data = fopen("./assets/uploads/CSV/" . $file['file_name'], "r");
+        if (!$data) {
+            $this->session->set_flashdata('message', 'Unable to open the file! Please contact support');
+            redirect($_SERVER['HTTP_REFERER'], 'refresh');
+            return;
+        }
 
-            // Reading file
-            $data = fopen("./assets/uploads/CSV/" . $file['file_name'], "r");
-            $i = 0;
+        $i = 0;
+        $importRes = array();
 
-            $importRes = array();
+        while (($filedata = fgetcsv($data, 1000, ",")) !== FALSE) {
+            // Skip the header row
+            if ($i == 0) {
+                $i++;
+                continue;
+            }
 
-            if ($data) {
-                // Initialize $importData_arr Array
-                while (($filedata = fgetcsv($data, 1000, ",")) !== FALSE) {
+            // Check if the row has the exact number of columns (31)
+            if (count($filedata) != 25) {
+                // Log misaligned row for debugging
+                echo "Row $i has an incorrect number of columns: " . count($filedata) . "<br>";
+                $i++;
+                continue; // Skip misaligned rows
+            }
 
-                    // Skip first row & check number of fields
-                    if ($i > 0) {
+            // Clean each field by trimming spaces
+            $filedata = array_map('trim', $filedata);
 
-                        // Key names are the insert table field names - name, email, city, and status
-                        $importRes[$i]['nat_id'] = $filedata[0];
-                        $importRes[$i]['citizenship'] = $filedata[1];
-                        $importRes[$i]['fname'] = $filedata[2];
-                        $importRes[$i]['mname'] = $filedata[3];
-                        $importRes[$i]['lname'] = $filedata[4];
-                        $importRes[$i]['alias'] = $filedata[5];
-                        $importRes[$i]['bplace'] = $filedata[6];
-                        $importRes[$i]['bdate'] = $filedata[7];
-                        $importRes[$i]['age'] = $filedata[8];
-                        $importRes[$i]['cstatus'] = $filedata[9];
-                        $importRes[$i]['gender'] = $filedata[10];
-                        $importRes[$i]['purok'] = $filedata[11];
-                        $importRes[$i]['vstatus'] = $filedata[12];
-                        $importRes[$i]['phone'] = $filedata[13];
-                        $importRes[$i]['email'] = $filedata[14];
-                        $importRes[$i]['occupation'] = $filedata[15];
-                        $importRes[$i]['employer_name'] = $filedata[16];
-                        $importRes[$i]['pwd'] = $filedata[17];
-                        $importRes[$i]['house_number'] = $filedata[18];
-                        $importRes[$i]['address'] = $filedata[19];
-                        $importRes[$i]['family'] = $filedata[20];
-                        $importRes[$i]['sss_no'] = $filedata[21];
-                        $importRes[$i]['tin_no'] = $filedata[22];
-                        $importRes[$i]['gsis_no'] = $filedata[23];
-                        $importRes[$i]['pagibig_no'] = $filedata[24];
-                        $importRes[$i]['philhealth_no'] = $filedata[25];
-                        $importRes[$i]['blood'] = $filedata[26];
-                        $importRes[$i]['precinct'] = $filedata[27];
-                    }
-                    $i++;
-                }
+            // Add row data to the importRes array
+            $importRes[] = array(
+                'nat_id' => isset($filedata[0]) ? $filedata[0] : null,
+                'citizenship' => isset($filedata[1]) ? $filedata[1] : null,
+                'fname' => isset($filedata[2]) ? $filedata[2] : null,
+                'mname' => isset($filedata[3]) ? $filedata[3] : null,
+                'lname' => isset($filedata[4]) ? $filedata[4] : null,
+                'alias' => isset($filedata[5]) ? $filedata[5] : null,
+                'bplace' => isset($filedata[6]) ? $filedata[6] : null,
+                'bdate' => isset($filedata[7]) ? (empty($filedata[7]) ? null : date('Y-m-d', strtotime($filedata[7]))) : null,
+                'age' => isset($filedata[7]) && !empty($filedata[7]) ? floor((time() - strtotime($filedata[7])) / 31556926) : null,
+                'cstatus' => isset($filedata[9]) ? $filedata[9] : null,
+                'gender' => isset($filedata[10]) ? $filedata[10] : null,
+                'purok' => isset($filedata[11]) ? $filedata[11] : null,
+                'vstatus' => isset($filedata[12]) ? $filedata[12] : null,
+                'phone' => isset($filedata[13]) ? $filedata[13] : null,
+                'email' => isset($filedata[14]) ? $filedata[14] : null,
+                'occupation' => isset($filedata[15]) ? $filedata[15] : null,
+                'employer_name' => isset($filedata[16]) ? $filedata[16] : null,
+                'pwd' => isset($filedata[17]) ? $filedata[17] : null,
+                'house_number' => isset($filedata[18]) ? $filedata[18] : null, // House Number
+                'address' => isset($filedata[19]) ? $filedata[19] : null,     // Address
+                'family' => isset($filedata[20]) ? $filedata[20] : null,       // Family Relation
+                'sss_no' => isset($filedata[21]) ? $filedata[21] : null,      // SSS No
+                'tin_no' => isset($filedata[22]) ? $filedata[22] : null,      // TIN No
+                'gsis_no' => isset($filedata[23]) ? $filedata[23] : null,     // GSIS No
+                'pagibig_no' => isset($filedata[24]) ? $filedata[24] : null,  // PAGIBIG No
+                'philhealth_no' => isset($filedata[25]) ? $filedata[25] : null, // PhilHealth No
+                'blood' => isset($filedata[26]) ? $filedata[26] : null,       // Blood Type
+                'precinct' => isset($filedata[27]) ? $filedata[27] : null      // Precinct No
+            );
+            $i++;
+        }
 
-                fclose($data);
+        fclose($data);
 
-                // Insert data
-                $count = 0;
-                foreach ($importRes as $data) {
+        // Insert data into the database
+        $count = 0;
+        foreach ($importRes as $data) {
+            $house = array(
+                'number' => $data['house_number'],
+            );
 
-                    $house = array(
-                        'number' => $data['house_number'],
-                    );
+            $res = array(
+                'national_id' => $data['nat_id'],
+                'citizenship' => $data['citizenship'],
+                'firstname' => $data['fname'],
+                'middlename' => $data['mname'],
+                'lastname' => $data['lname'],
+                'alias' => $data['alias'],
+                'birthplace' => $data['bplace'],
+                'birthdate' => $data['bdate'],
+                'age' => $data['age'],
+                'civilstatus' => $data['cstatus'],
+                'gender' => $data['gender'],
+                'purok' => $data['purok'],
+                'voterstatus' => $data['vstatus'],
+                'phone' => $data['phone'],
+                'email' => $data['email'],
+                'occupation' => $data['occupation'],
+                'employer_name' => $data['employer_name'],
+                'pwd' => $data['pwd'],
+                'address' => $data['address'],
+            );
 
-                    $res = array(
-                        'national_id' => $data['nat_id'],
-                        'citizenship' => $data['citizenship'],
-                        'firstname' => $data['fname'],
-                        'middlename' => $data['mname'],
-                        'lastname' => $data['lname'],
-                        'alias' => $data['alias'],
-                        'birthplace' => $data['bplace'],
-                        'birthdate' => $data['bdate'],
-                        'age' => floor((time() - strtotime($data['bdate'])) / 31556926),
-                        'civilstatus' => $data['cstatus'],
-                        'gender' => $data['gender'],
-                        'purok' => $data['purok'],
-                        'voterstatus' => $data['vstatus'],
-                        'phone' => $data['phone'],
-                        'email' => $data['email'],
-                        'occupation' => $data['occupation'],
-                        'employer_name' => $data['employer_name'],
-                        'pwd' => $data['pwd'],
-                        'address' => $data['address'],
-                    );
+            $this->residentModel->saveHouse($house);
+            $insert_id = $this->residentModel->save($res);
 
-                    $this->residentModel->saveHouse($house);
+            if ($insert_id) {
+                $other_data = array(
+                    'resident_id' => $insert_id,
+                    'sss' => $data['sss_no'],
+                    'tin' => $data['tin_no'],
+                    'precinct' => $data['precinct'],
+                    'gsis' => $data['gsis_no'],
+                    'pagibig' => $data['pagibig_no'],
+                    'philhealth' => $data['philhealth_no'],
+                    'blood' => $data['blood'],
+                );
 
-                    $insert_id = $this->residentModel->save($res);
+                $house_info = array(
+                    'resident_id' => $insert_id,
+                    'house_number' => $data['house_number'],
+                    'relation' => $data['family'],
+                );
 
-                    $other_data = array(
-                        'resident_id' => $insert_id,
-                        'sss' => $data['sss_no'],
-                        'tin' => $data['tin_no'],
-                        'precinct' => $data['precinct'],
-                        'gsis' => $data['gsis_no'],
-                        'pagibig' => $data['pagibig_no'],
-                        'philhealth' => $data['philhealth_no'],
-                        'blood' => $data['blood'],
-                    );
+                $covid_data = array(
+                    'resident_id' => $insert_id,
+                    'status' => 'Negative',
+                );
 
+                $this->residentModel->updateCovid($covid_data, $insert_id);
+                $this->residentModel->save_details($other_data);
+                $this->residentModel->save_house_details($house_info);
 
-
-                    $house_info = array(
-                        'resident_id' => $insert_id,
-                        'house_number' => $data['house_number'],
-                        'relation' => $data['family'],
-                    );
-
-                    $data = array(
-                        'resident_id ' => $insert_id,
-                        'status' => 'Negative',
-                    );
-
-                    $this->residentModel->updateCovid($data, $insert_id);
-
-
-                    $this->residentModel->save_details($other_data);
-                    $this->residentModel->save_house_details($house_info);
-                    $count++;
-                }
-
-                $this->session->set_flashdata('message', 'File Imported Successfully!');
+                $count++;
             } else {
-                $this->session->set_flashdata('message', 'Unable to open the file! Please contact support');
+                echo "Failed to insert data for National ID: " . $data['nat_id'] . "<br>";
             }
         }
 
+        $this->session->set_flashdata('message', "$count records imported successfully!");
         redirect($_SERVER['HTTP_REFERER'], 'refresh');
     }
+}
+
+    
+    
+
     
 
     public function qrCode($id)
@@ -990,4 +1061,19 @@ class Resident extends CI_Controller
         //output to json format
         echo json_encode($output);
     }
+    
+
+    // this is where to fetch the population and per purok of borol 1st
+    public function fetch_population_data()
+    {
+        $this->load->model('ResidentTableModel');
+        $data = $this->ResidentTableModel->get_population_per_purok();
+    
+        if ($data) {
+            echo json_encode($data);
+        } else {
+            echo json_encode([]);
+        }
+    }
+    
 }

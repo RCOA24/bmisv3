@@ -79,4 +79,22 @@ class ResidentTableModel extends CI_Model {
         return $this->db->count_all_results();
     }
  
+
+//This is where to get the population per purok
+
+    public function get_population_per_purok()
+    {
+        $this->db->select('purok, COUNT(*) as population');
+        $this->db->from($this->table);
+        $this->db->where('purok IS NOT NULL'); // Ensure we only count valid purok
+        $this->db->group_by('purok');
+        $this->db->order_by('purok', 'ASC'); // Optional: To order the results
+        $query = $this->db->get();
+    
+        return $query->result_array(); // Should return an array of purok-population pairs
+    }
+    
+
+ 
+
 }
