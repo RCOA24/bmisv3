@@ -3,8 +3,8 @@
         <h1 class="welcome_text"><?= $title ?></h1>
     </div>
 </div>
-<div class="bg-light">
-    <div class="container text-dark">
+<div class="bg-light" style="background-color: #F5FCFF !important;">
+        <div class="container text-dark">
         <div class="pb-3">
             <h2 class="welcome_text mt-5 pt-5">Details for applying:</h2>
         </div>
@@ -13,7 +13,7 @@
                 <div class="table-responsive">
 
                     <table class="table">
-                        <thead class="text-light" style="background-color:#2CCCC4">
+                        <thead class="text-light" style="background-color:#102407">
                             <tr>
                                 <th>
                                     <h5>Requirements</h5>
@@ -27,7 +27,7 @@
                         </tbody>
                     </table>
                     <table class="table">
-                        <thead class="text-light" style="background-color:#2CCCC4">
+                        <thead class="text-light" style="background-color:#102407">
                             <tr>
                                 <th>
                                     <h5>Payment Details</h5>
@@ -48,7 +48,7 @@
             <div class="col-md-6">
                 <div class="table-responsive">
                     <table class="table">
-                        <thead class="text-light" style="background-color:#2CCCC4">
+                        <thead class="text-light" style="background-color:#102407">
                             <tr>
                                 <th>
                                     <h5>Gcash QR Code</h5>

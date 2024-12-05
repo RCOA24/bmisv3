@@ -1,4 +1,4 @@
-<div class="bg-light" style="padding: 60px 0;">
+<div class="bg-light" style="padding: 60px 0; background-color: #F5FCFF !important;">
     <div class="container">
         <div class="row justify-content-center">
             <!-- Population Section -->
