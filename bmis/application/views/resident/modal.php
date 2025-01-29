@@ -132,6 +132,7 @@ $id = $query->row();
                         <label class="control-label">Select Certificate Sidebar Background Color</label><br>
                         <input type="text" name="bg_color" class="colorpicker form-control w-100" value="<?= $id->bg_color ?>" />
                     </div>
+                    
                     <div class="form-group">
                         <label class="control-label">Front ID Watermark</label><br>
                         <input name="front" accept="image/*" type="file" class="dropify" data-height="250" id="input-file-now-custom-100" data-default-file="<?= site_url() . '/assets/uploads/' . $id->front ?>" />
